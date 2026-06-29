@@ -46,10 +46,14 @@ export type MvpDraft = {
 
 export type JournalEvent = {
   id: string;
-  type: "nivel" | "mision" | "prompt" | "mvp" | "concepto";
+  timestamp: string;
+  type: "nivel" | "mision" | "prompt" | "mvp" | "concepto" | "export";
   title: string;
-  detail: string;
-  createdAt: string;
+  description: string;
+  pointsDelta?: number;
+  relatedMissionId?: string;
+  learnedConcepts?: string[];
+  metadata?: Record<string, string | number | boolean | null>;
 };
 
 export type LearnState = {

@@ -31,7 +31,10 @@ export const useLearnState = () => {
           selectedLevel: level,
           learnedConcepts: addUnique(current.learnedConcepts, "usuario"),
           journalEvents: [
-            createEvent("nivel", "Nivel elegido", `Seleccionaste el nivel ${level}.`),
+            createEvent("nivel", "Nivel elegido", `Seleccionaste el nivel ${level}.`, {
+              learnedConcepts: ["usuario"],
+              metadata: { selectedLevel: level },
+            }),
             ...current.journalEvents,
           ],
         }));
@@ -54,7 +57,11 @@ export const useLearnState = () => {
             badges: addUnique(current.badges, mission.badge),
             streak: current.streak + 1,
             journalEvents: [
-              createEvent("mision", mission.title, `Ganaste ${mission.reward} puntos y la insignia ${mission.badge}.`),
+              createEvent("mision", mission.title, `Ganaste ${mission.reward} puntos y la insignia ${mission.badge}.`, {
+                pointsDelta: mission.reward,
+                relatedMissionId: mission.id,
+                metadata: { badge: mission.badge },
+              }),
               ...current.journalEvents,
             ],
           };
@@ -68,9 +75,14 @@ export const useLearnState = () => {
             new Set([...current.learnedConcepts, ...result.concepts.map((concept) => concept.id)]),
           ),
           journalEvents: [
-            createEvent("prompt", "Prompt mejorado", `Convertiste "${result.original}" en una instrucción más clara.`),
+            createEvent("prompt", "Prompt mejorado", `Convertiste "${result.original}" en una instrucción más clara.`, {
+              learnedConcepts: result.concepts.map((concept) => concept.id),
+              metadata: { promptId: result.id },
+            }),
             ...result.concepts.map((concept) =>
-              createEvent("concepto", concept.name, `${concept.meaning} ${concept.example}`),
+              createEvent("concepto", concept.name, `${concept.meaning} ${concept.example}`, {
+                learnedConcepts: [concept.id],
+              }),
             ),
             ...current.journalEvents,
           ],
@@ -82,7 +94,10 @@ export const useLearnState = () => {
           mvpDraft: draft,
           learnedConcepts: addUnique(current.learnedConcepts, "mvp"),
           journalEvents: [
-            createEvent("mvp", "MVP diseñado", `Definiste la primera versión de ${draft.appName || "tu app"}.`),
+            createEvent("mvp", "MVP diseñado", `Definiste la primera versión de ${draft.appName || "tu app"}.`, {
+              learnedConcepts: ["mvp"],
+              metadata: { appName: draft.appName || null },
+            }),
             ...current.journalEvents,
           ],
         }));
@@ -92,7 +107,21 @@ export const useLearnState = () => {
           ...current,
           learnedConcepts: Array.from(new Set([...current.learnedConcepts, ...conceptIds])),
           journalEvents: [
-            createEvent("concepto", "Conceptos revisados", `Revisaste ${conceptIds.length} conceptos del mapa de una app.`),
+            createEvent("concepto", "Conceptos revisados", `Revisaste ${conceptIds.length} conceptos del mapa de una app.`, {
+              learnedConcepts: conceptIds,
+              metadata: { conceptCount: conceptIds.length },
+            }),
+            ...current.journalEvents,
+          ],
+        }));
+      },
+      recordExport: (format: "JSON" | "Markdown") => {
+        setState((current) => ({
+          ...current,
+          journalEvents: [
+            createEvent("export", "Bitácora exportada", `Exportaste tu bitácora en formato ${format}.`, {
+              metadata: { format },
+            }),
             ...current.journalEvents,
           ],
         }));

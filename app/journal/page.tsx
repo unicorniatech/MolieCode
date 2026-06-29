@@ -2,10 +2,25 @@
 
 import { ConceptCard } from "@/components/concept-card";
 import { useLearn } from "@/components/learn-context";
+import { buildJournalJsonExport, buildJournalMarkdownExport, downloadTextFile } from "@/lib/exporters";
+
+const exportDateSlug = () => new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
 
 export default function JournalPage() {
   const { state, learnedConceptDetails, actions } = useLearn();
   const lastPrompt = state.promptHistory[0];
+
+  const handleJsonExport = () => {
+    const content = JSON.stringify(buildJournalJsonExport(state), null, 2);
+    downloadTextFile(`molie-code-learn-bitacora-${exportDateSlug()}.json`, content, "application/json;charset=utf-8");
+    actions.recordExport("JSON");
+  };
+
+  const handleMarkdownExport = () => {
+    const content = buildJournalMarkdownExport(state);
+    downloadTextFile(`molie-code-learn-resumen-${exportDateSlug()}.md`, content, "text/markdown;charset=utf-8");
+    actions.recordExport("Markdown");
+  };
 
   return (
     <>
@@ -18,14 +33,57 @@ export default function JournalPage() {
             Ejemplo: nivel elegido, prompts, MVP, misiones y conceptos aprendidos.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={actions.resetProgress}
-          className="focus-ring rounded-md border border-[var(--line)] bg-white px-5 py-3 font-semibold"
-        >
-          Reiniciar progreso
-        </button>
+        <div className="flex flex-col gap-2 sm:min-w-56">
+          <button
+            type="button"
+            onClick={handleJsonExport}
+            className="focus-ring rounded-md bg-[var(--brand)] px-5 py-3 font-semibold text-white"
+          >
+            Exportar bitácora JSON
+          </button>
+          <button
+            type="button"
+            onClick={handleMarkdownExport}
+            className="focus-ring rounded-md bg-[var(--accent)] px-5 py-3 font-semibold text-white"
+          >
+            Exportar resumen Markdown
+          </button>
+          <button
+            type="button"
+            onClick={actions.resetProgress}
+            className="focus-ring rounded-md border border-[var(--line)] bg-white px-5 py-3 font-semibold"
+          >
+            Reiniciar progreso
+          </button>
+        </div>
       </div>
+
+      <section className="mb-6 rounded-lg border border-[#c7d8f6] bg-[#f3f7ff] p-5 shadow-sm">
+        <h2 className="text-xl font-bold">Exportación de aprendizaje</h2>
+        <div className="mt-4 grid gap-4 text-sm leading-6 md:grid-cols-2">
+          <p>
+            <span className="font-semibold">Bitácora</span> significa registro de lo que hiciste, aprendiste y
+            construiste. Sirve para revisar tu avance con evidencia.
+          </p>
+          <p>
+            <span className="font-semibold">Exportar</span> significa guardar o descargar información para usarla fuera
+            de la app, por ejemplo en tus notas o en otra herramienta.
+          </p>
+          <p>
+            <span className="font-semibold">JSON</span> significa formato simple para guardar datos estructurados. Es
+            útil cuando otra app necesita leer tu progreso con orden.
+          </p>
+          <p>
+            <span className="font-semibold">Markdown</span> significa formato de texto fácil de leer que usa símbolos
+            simples para títulos, listas y secciones.
+          </p>
+          <p className="md:col-span-2">
+            <span className="font-semibold">Dataset</span> significa conjunto de datos que puede usarse después para
+            análisis o entrenamiento. En el futuro, estas exportaciones podrían ayudar a entrenar Molie Code con ejemplos
+            reales de cómo aprende una persona, sin necesitar servidor en esta Alpha.
+          </p>
+        </div>
+      </section>
 
       <section className="grid gap-4 md:grid-cols-2">
         <article className="rounded-lg border border-[var(--line)] bg-white p-5 shadow-sm">
@@ -105,9 +163,25 @@ export default function JournalPage() {
           {state.journalEvents.length ? (
             state.journalEvents.map((event) => (
               <article key={event.id} className="rounded-md bg-[#f6f5fb] p-4">
-                <p className="text-sm font-semibold uppercase text-[var(--muted)]">{event.type}</p>
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm font-semibold uppercase text-[var(--muted)]">{event.type}</p>
+                  <time className="text-xs text-[var(--muted)]" dateTime={event.timestamp}>
+                    {new Intl.DateTimeFormat("es-MX", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    }).format(new Date(event.timestamp))}
+                  </time>
+                </div>
                 <h3 className="font-bold">{event.title}</h3>
-                <p className="mt-1 text-sm">{event.detail}</p>
+                <p className="mt-1 text-sm">{event.description}</p>
+                {typeof event.pointsDelta === "number" ? (
+                  <p className="mt-2 text-xs font-semibold text-[#0b6d5a]">Puntos: +{event.pointsDelta}</p>
+                ) : null}
+                {event.learnedConcepts?.length ? (
+                  <p className="mt-2 text-xs text-[var(--muted)]">
+                    Conceptos: {event.learnedConcepts.join(", ")}
+                  </p>
+                ) : null}
               </article>
             ))
           ) : (

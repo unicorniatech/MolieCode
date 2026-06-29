@@ -68,6 +68,7 @@ components/
   prompt-improver.tsx
 lib/
   gamification.ts
+  exporters.ts
   learning-content.ts
   missions.ts
   prompt-improver.ts
@@ -83,9 +84,20 @@ lib/
 - El estado global vive en un provider de React para que navegación, páginas y tarjeta de progreso se actualicen al instante.
 - Cada concepto técnico se presenta con significado, utilidad y ejemplo sencillo en español de México.
 
+## Exportación de bitácora
+
+La bitácora se puede exportar desde `/journal` para usar el aprendizaje fuera de la app. Exportar significa guardar o descargar información en un archivo local.
+
+Formatos disponibles:
+
+- JSON: formato simple para guardar datos estructurados. Incluye progreso, puntos, misiones, prompts, MVP, conceptos aprendidos, eventos, `productName`, `exportVersion` y `exportedAt`.
+- Markdown: formato de texto fácil de leer con títulos, listas y secciones. Resume nivel, puntos, insignias, conceptos, prompts, MVP y eventos principales.
+
+Esto prepara el camino para un futuro dataset de entrenamiento. Dataset significa conjunto de datos que puede usarse después para análisis o entrenamiento. En esta Alpha todo se mantiene local-first: no se suben archivos, no hay backend y no se conectan APIs externas.
+
 ## Próximos pasos
 
 - Agregar evaluación guiada de prompts con más reglas locales.
-- Permitir exportar la bitácora como archivo.
+- Refinar las exportaciones con filtros por fecha o tipo de evento.
 - Crear proyectos de práctica por categoría.
 - Diseñar una ruta futura para IA real, auth y base de datos cuando la Alpha valide el flujo educativo.
