@@ -90,6 +90,7 @@ export type LearnActions = {
   saveMvp: (draft: MvpDraft) => void;
   learnConcepts: (conceptIds: string[]) => void;
   recordExport: (format: "JSON" | "Markdown") => void;
+  recordFirstLocalAppPackageExport: (format: "JSON" | "Markdown") => void;
   updateFirstLocalApp: (patch: Partial<LearnState["firstLocalAppProgress"]>) => void;
   completeFirstLocalAppStep: (stepId: string, learnedConcepts?: string[]) => void;
   saveFirstLocalAppRecord: (values: Record<string, string>) => void;

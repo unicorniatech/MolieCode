@@ -118,6 +118,17 @@ Simula una experiencia de construcción dentro de Molie Code Learn. No exporta u
 
 Esta práctica prepara el camino para un futuro constructor real de apps porque captura decisiones educativas: idea elegida, pantalla diseñada, campos definidos, registros de prueba, conceptos aprendidos y misiones completadas.
 
+## Paquete de aprendizaje
+
+El paquete de aprendizaje es un archivo descargable que resume lo que el usuario construyó, aprendió y decidió durante “Mi Primera App Local”. Se descarga desde la sección de resumen del proyecto guiado.
+
+Formatos disponibles:
+
+- JSON: útil para conservar datos estructurados como plantilla elegida, pantalla, campos, registros de prueba, conceptos, puntos e insignias.
+- Markdown: útil para leer y compartir un resumen claro con otra persona.
+
+Para usuarios principiantes sirve como evidencia de avance: pueden revisar qué hicieron, explicar su idea y guardar una copia local sin depender de servidores. Esto prepara el camino para Molie Code porque el paquete captura decisiones reales de aprendizaje que más adelante podrían usarse como contexto para un constructor de apps más completo.
+
 ## Próximos pasos
 
 - Agregar evaluación guiada de prompts con más reglas locales.

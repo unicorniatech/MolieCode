@@ -127,6 +127,28 @@ export const useLearnState = () => {
           ],
         }));
       },
+      recordFirstLocalAppPackageExport: (format: "JSON" | "Markdown") => {
+        const formatConcept = format === "JSON" ? "json" : "markdown";
+
+        setState((current) => ({
+          ...current,
+          learnedConcepts: Array.from(
+            new Set([...current.learnedConcepts, "paquete-aprendizaje", "exportar", formatConcept]),
+          ),
+          journalEvents: [
+            createEvent(
+              "export",
+              "Paquete de aprendizaje descargado",
+              `Descargaste el paquete de aprendizaje de Mi Primera App Local en formato ${format}.`,
+              {
+                learnedConcepts: ["paquete-aprendizaje", "exportar", formatConcept],
+                metadata: { format, packageType: "first-local-app-learning-package" },
+              },
+            ),
+            ...current.journalEvents,
+          ],
+        }));
+      },
       updateFirstLocalApp: (patch: Partial<LearnState["firstLocalAppProgress"]>) => {
         setState((current) => ({
           ...current,
