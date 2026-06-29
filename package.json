@@ -1,0 +1,27 @@
+{
+  "name": "molie-code-learn",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Alpha local-first para aprender a crear apps con IA paso a paso.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "next": "^16.0.10",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.2",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.0.10",
+    "typescript": "^5.9.3"
+  }
+}
