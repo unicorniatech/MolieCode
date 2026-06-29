@@ -1,6 +1,7 @@
 "use client";
 
 import type { JournalEvent, LearnState, MvpDraft, PromptResult, UserLevelId } from "./types";
+import { initialFirstLocalAppProgress } from "./first-local-app";
 
 export const STORAGE_KEY = "molie-code-learn.state";
 
@@ -12,6 +13,7 @@ export const initialState: LearnState = {
   streak: 1,
   promptHistory: [],
   mvpDraft: null,
+  firstLocalAppProgress: initialFirstLocalAppProgress,
   learnedConcepts: [],
   journalEvents: [],
 };
@@ -50,6 +52,15 @@ const normalizeJournalEvent = (event: StoredJournalEvent): JournalEvent => ({
 const normalizeState = (value: Partial<LearnState>): LearnState => ({
   ...initialState,
   ...value,
+  firstLocalAppProgress: {
+    ...initialFirstLocalAppProgress,
+    ...value.firstLocalAppProgress,
+    fields: value.firstLocalAppProgress?.fields?.length
+      ? value.firstLocalAppProgress.fields
+      : initialFirstLocalAppProgress.fields,
+    sampleRecords: value.firstLocalAppProgress?.sampleRecords ?? [],
+    completedSteps: value.firstLocalAppProgress?.completedSteps ?? [],
+  },
   journalEvents: Array.isArray(value.journalEvents) ? value.journalEvents.map(normalizeJournalEvent) : [],
 });
 
@@ -79,5 +90,8 @@ export type LearnActions = {
   saveMvp: (draft: MvpDraft) => void;
   learnConcepts: (conceptIds: string[]) => void;
   recordExport: (format: "JSON" | "Markdown") => void;
+  updateFirstLocalApp: (patch: Partial<LearnState["firstLocalAppProgress"]>) => void;
+  completeFirstLocalAppStep: (stepId: string, learnedConcepts?: string[]) => void;
+  saveFirstLocalAppRecord: (values: Record<string, string>) => void;
   resetProgress: () => void;
 };

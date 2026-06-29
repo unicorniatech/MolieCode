@@ -44,10 +44,38 @@ export type MvpDraft = {
   updatedAt: string;
 };
 
+export type FirstLocalAppTemplateId =
+  | "todo-list"
+  | "client-directory"
+  | "order-log"
+  | "personal-journal"
+  | "small-inventory";
+
+export type FirstLocalAppField = {
+  id: string;
+  label: string;
+};
+
+export type FirstLocalAppRecord = {
+  id: string;
+  values: Record<string, string>;
+  createdAt: string;
+};
+
+export type FirstLocalAppProgress = {
+  selectedTemplate: FirstLocalAppTemplateId | null;
+  screenTitle: string;
+  screenDescription: string;
+  primaryButtonText: string;
+  fields: FirstLocalAppField[];
+  sampleRecords: FirstLocalAppRecord[];
+  completedSteps: string[];
+};
+
 export type JournalEvent = {
   id: string;
   timestamp: string;
-  type: "nivel" | "mision" | "prompt" | "mvp" | "concepto" | "export";
+  type: "nivel" | "mision" | "prompt" | "mvp" | "concepto" | "export" | "proyecto";
   title: string;
   description: string;
   pointsDelta?: number;
@@ -64,6 +92,7 @@ export type LearnState = {
   streak: number;
   promptHistory: PromptResult[];
   mvpDraft: MvpDraft | null;
+  firstLocalAppProgress: FirstLocalAppProgress;
   learnedConcepts: string[];
   journalEvents: JournalEvent[];
 };

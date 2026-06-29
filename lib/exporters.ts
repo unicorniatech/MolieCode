@@ -1,4 +1,5 @@
 import { appConcepts } from "./learning-content";
+import { getTemplateLabel } from "./first-local-app";
 import { missions } from "./missions";
 import type { LearnState } from "./types";
 
@@ -31,6 +32,7 @@ export const buildJournalMarkdownExport = (state: LearnState): string => {
   const exportedAt = new Date().toISOString();
   const lastPrompt = state.promptHistory[0];
   const mvp = state.mvpDraft;
+  const firstLocalApp = state.firstLocalAppProgress;
   const learnedConceptNames = state.learnedConcepts.map(conceptLabel);
   const completedMissionNames = state.completedMissions.map(missionLabel);
 
@@ -72,6 +74,16 @@ ${lastPrompt ? lastPrompt.improved : "Pendiente"}
 - Usuario principal: ${mvp?.primaryUser || "Pendiente"}
 - Funciones básicas: ${mvp?.features.filter(Boolean).join(", ") || "Pendiente"}
 - Fuera de alcance: ${mvp?.outOfScope || "Pendiente"}
+
+## Mi Primera App Local
+
+- Idea elegida: ${getTemplateLabel(firstLocalApp.selectedTemplate)}
+- Pantalla diseñada: ${firstLocalApp.screenTitle || "Pendiente"}
+- Descripción de pantalla: ${firstLocalApp.screenDescription || "Pendiente"}
+- Botón principal: ${firstLocalApp.primaryButtonText || "Pendiente"}
+- Campos: ${firstLocalApp.fields.map((field) => field.label).join(", ") || "Pendiente"}
+- Registros de prueba guardados: ${firstLocalApp.sampleRecords.length}
+- Pasos completados: ${firstLocalApp.completedSteps.length}
 
 ## Eventos principales de la bitácora
 

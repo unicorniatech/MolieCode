@@ -12,6 +12,7 @@ const links = [
   { href: "/learn", label: "Nivel" },
   { href: "/map", label: "Mapa" },
   { href: "/missions", label: "Misiones" },
+  { href: "/first-local-app", label: "Primera app" },
   { href: "/builder", label: "Prompt" },
   { href: "/mvp", label: "MVP" },
   { href: "/progress", label: "Progreso" },

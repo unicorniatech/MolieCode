@@ -19,6 +19,12 @@ export default function Home() {
           >
             Ver mapa de aprendizaje
           </Link>
+          <Link
+            className="focus-ring rounded-md border border-[var(--line)] bg-white px-5 py-3 text-center font-semibold"
+            href="/first-local-app"
+          >
+            Crear mi primera app local
+          </Link>
         </div>
       </section>
 
@@ -46,6 +52,21 @@ export default function Home() {
             <p className="mt-3 rounded-md bg-[#f6f5fb] p-3 text-sm">{item.example}</p>
           </article>
         ))}
+      </section>
+
+      <section className="mt-6 rounded-lg border border-[#c7d8f6] bg-[#f3f7ff] p-6 shadow-sm">
+        <p className="text-sm font-semibold uppercase text-[var(--brand)]">Nuevo proyecto guiado</p>
+        <h2 className="mt-2 text-2xl font-bold">Mi Primera App Local</h2>
+        <p className="mt-3 max-w-3xl leading-7 text-[var(--muted)]">
+          Proyecto guiado significa una experiencia paso a paso donde aprendes creando una app concreta. Aquí puedes
+          elegir una idea, diseñar una pantalla, crear un formulario y guardar registros de prueba en localStorage.
+        </p>
+        <Link
+          className="focus-ring mt-5 inline-block rounded-md bg-[var(--brand)] px-5 py-3 font-semibold text-white"
+          href="/first-local-app"
+        >
+          Abrir proyecto guiado
+        </Link>
       </section>
     </>
   );

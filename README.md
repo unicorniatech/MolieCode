@@ -53,6 +53,7 @@ app/
   learn/page.tsx
   map/page.tsx
   missions/page.tsx
+  first-local-app/page.tsx
   builder/page.tsx
   mvp/page.tsx
   progress/page.tsx
@@ -61,14 +62,20 @@ components/
   app-shell.tsx
   badge-card.tsx
   concept-card.tsx
+  first-local-app-guide.tsx
+  form-builder.tsx
   learn-context.tsx
+  local-records-preview.tsx
   mission-card.tsx
   mvp-designer.tsx
   progress-card.tsx
   prompt-improver.tsx
+  screen-preview.tsx
+  template-picker.tsx
 lib/
   gamification.ts
   exporters.ts
+  first-local-app.ts
   learning-content.ts
   missions.ts
   prompt-improver.ts
@@ -95,9 +102,25 @@ Formatos disponibles:
 
 Esto prepara el camino para un futuro dataset de entrenamiento. Dataset significa conjunto de datos que puede usarse después para análisis o entrenamiento. En esta Alpha todo se mantiene local-first: no se suben archivos, no hay backend y no se conectan APIs externas.
 
+## Mi Primera App Local
+
+Mi Primera App Local es el primer proyecto guiado educativo de la Alpha. Proyecto guiado significa una experiencia paso a paso donde el usuario aprende creando una app concreta.
+
+Enseña:
+
+- Cómo elegir una idea simple.
+- Qué son pantalla, componente, estado, formulario, campo, registro, guardado local y vista previa.
+- Cómo diseñar una pantalla inicial.
+- Cómo definir un formulario con tres campos.
+- Cómo simular el guardado de datos en `localStorage`.
+
+Simula una experiencia de construcción dentro de Molie Code Learn. No exporta un proyecto real, no genera archivos de código para la app del usuario, no usa IA real, no conecta GitHub y no usa backend.
+
+Esta práctica prepara el camino para un futuro constructor real de apps porque captura decisiones educativas: idea elegida, pantalla diseñada, campos definidos, registros de prueba, conceptos aprendidos y misiones completadas.
+
 ## Próximos pasos
 
 - Agregar evaluación guiada de prompts con más reglas locales.
 - Refinar las exportaciones con filtros por fecha o tipo de evento.
-- Crear proyectos de práctica por categoría.
+- Agregar más proyectos guiados por categoría.
 - Diseñar una ruta futura para IA real, auth y base de datos cuando la Alpha valide el flujo educativo.
